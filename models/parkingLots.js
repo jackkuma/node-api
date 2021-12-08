@@ -16,5 +16,9 @@ module.exports = {
     itemArea: function (req, callback) {
         sql = mysql.format('SELECT * FROM tainanPakings WHERE Area=?', [req.params.AreaCode]);
         return connection.query(sql, callback);
+    },
+    itemScooter: function (req, callback) {
+        sql = mysql.format('SELECT * FROM tainanPakings where Scooter>0 AND BusinessHours=? AND Area=?', [req.params.BusinessHours, req.params.AreaCode]);
+        return connection.query(sql, callback);
     }
 }

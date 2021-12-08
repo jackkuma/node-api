@@ -56,4 +56,21 @@ router.route('/Area/:AreaCode')
         });
     });
 
+router.route('/Scooter/:BusinessHours&:AreaCode')
+    .get(function(req, res) {
+        lots.itemScooter(req, function(err, results, fields) {
+            if (err) {
+                res.sendStatus(500);
+                return console.error(err);
+            }
+
+            if (!results.length) {
+                res.sendStatus(404);
+                return;
+            }
+
+            res.json(results);
+        });
+    });
+
 module.exports = router;
