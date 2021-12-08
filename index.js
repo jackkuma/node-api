@@ -1,13 +1,19 @@
+var bodyparser = require('body-parser'); //解析HTTP請求的中介軟體
 var express = require('express');
+
+var conf = require('./conf');
+var functions = require('./functions');
+var lots = require('./routes/parkingLots');
+
 var app = express();
 
-app.get('/', function(req, res) {
-  res.send('Hello World! It is V2');
-});
+// 使用bodyparser.json()將HTTP請求方法 POST、DELETE、PUT和PATCH，放在HTTP主體(body); 發送的參數存放在req.body
+app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.json());
 
-var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
-  
-  console.log("Example app listening at 'http://%s:%s'", host, port);
-})
+app.use(functions.passwdCrypto);
+app.use('/parking', lots);
+
+app.listen(conf.port, function() {
+  console.log('Example app listening on port ' + conf.port + ' !');
+});
