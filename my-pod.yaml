@@ -5,9 +5,25 @@ metadata:
   name: my-pod
   labels:
     app: webserver
+    tier: backend
+  annotations:
+    version: latest
+    release_date: 2021/11/10
+    contact: jackc90727@gmail.com
 spec:
   containers:
   - name: pod-demo
     image: jackkuma/node-api
     ports:
     - containerPort: 3000
+    env:
+    - name: SECRET_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: demo-secret-from-yaml
+          key: username
+    - name: SECRET_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: demo-secret-from-yaml
+          key: password

@@ -1,9 +1,8 @@
 # 檔案名稱 .gitignore
 
 package-lock.json
+*.yaml
+conf.js
 
 node_modules
-
-build/
-coverage/
 .module-cache
