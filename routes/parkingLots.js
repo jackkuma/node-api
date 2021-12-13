@@ -22,6 +22,23 @@ router.route('/')
         });
     });
 
+router.route('/type')
+    .get(function(req, res) {
+        lots.itemType(req, function(err, results, fields) {
+            if (err) {
+                res.sendStatus(500);
+                return console.error(err);
+            }
+
+            if (!results.length) {
+                res.sendStatus(404);
+                return;
+            }
+
+            res.json(results);
+        });
+    });
+
 router.route('/:PakingCode')
     .get(function(req, res) {
         lots.item(req, function(err, results, fields) {
@@ -39,7 +56,7 @@ router.route('/:PakingCode')
         });
     });
 
-router.route('/Area/:AreaCode')
+router.route('/Area/:AreaName')
     .get(function(req, res) {
         lots.itemArea(req, function(err, results, fields) {
             if (err) {
@@ -56,9 +73,9 @@ router.route('/Area/:AreaCode')
         });
     });
 
-router.route('/Scooter/:BusinessHours&:AreaCode')
+router.route('/Open/BusinessHours=:BusinessHours&Area=:AreaName')
     .get(function(req, res) {
-        lots.itemScooter(req, function(err, results, fields) {
+        lots.itemOpen(req, function(err, results, fields) {
             if (err) {
                 res.sendStatus(500);
                 return console.error(err);
